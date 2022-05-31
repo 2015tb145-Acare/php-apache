@@ -17,6 +17,8 @@ RUN apt-get update -qq && \
 	unzip \
 	zip \
 	zlib1g-dev \
+	libpq-dev \
+	libpng-dev \
 	nodejs\
 	npm &&\
 	# Reduce layer size
@@ -24,7 +26,7 @@ RUN apt-get update -qq && \
 
 # PHP Extensions (include postgresql, mysql, gd)
 RUN docker-php-ext-configure zip && \
-	docker-php-ext-install -j$(nproc) intl opcache pdo pdo_pgsql pdo_mysql zip gd
+	docker-php-ext-install -j$(nproc) intl opcache pdo pdo_pgsql pdo_mysql gd zip
 COPY conf/php.ini /usr/local/etc/php/conf.d/app.ini
 
 # Apache
