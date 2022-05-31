@@ -14,14 +14,14 @@ RUN apt-get update -qq && \
 	gnupg \
 	unzip \
 	zip \
+	libpq-dev \
 	nodejs\
 	npm &&\
 	# Reduce layer size
 	apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # PHP Extensions (include postgresql, mysql, gd)
-RUN docker-php-ext-configure zip && \
-	docker-php-ext-install -j$(nproc) intl opcache pdo pdo_pgsql pdo_mysql zip gd
+RUN docker-php-ext-install -j$(nproc) opcache pdo pdo_pgsql pdo_mysql
 COPY conf/php.ini /usr/local/etc/php/conf.d/app.ini
 
 # Apache
